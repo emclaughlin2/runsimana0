@@ -6,4 +6,4 @@ export HOME=/sphenix/u/egm2153
 export MYINSTALL=$HOME/install
 source $OPT_SPHENIX/bin/setup_local.sh $MYINSTALL
 export SPHENIX=$MYINSTALL
-root -b -q 'run_dETdeta.C('${1},\"${2}\",${3},${4},${5},${6},${7},${8}')'
+root -b -q 'run_dETdeta.C('${1},\"${2}\",${3},${4},${5},${6},${7},${8},${9},${10}')'

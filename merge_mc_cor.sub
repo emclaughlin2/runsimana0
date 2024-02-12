@@ -1,8 +1,0 @@
-executable = merge.sh
-arguments = 555 20231108_nopileup_wzs_nodanvtx 1 1
-should_transfer_files	= IF_NEEDED
-when_to_transfer_output = ON_EXIT
-error			= output/err/errormerge_mc_cor.err
-output			= output/out/outputmerge_mc_cor.out
-log = /tmp/jocl_merge.log
-queue 1

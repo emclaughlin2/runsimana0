@@ -1,9 +1,9 @@
 executable = dETdeta.sh
-arguments = $(Process) 20231117_nomanshift_nopileup_nzs 1 0 0 1 0
-output = output/out/output_mc_cor_$(Process).out
+arguments = $(Process) 20231211_etc 1 0 0 1 0 0 0
+output = output/out/output_mc_nzs_$(Process).out
 transfer_input_files	= /sphenix/user/jocl/projects/testinstall/lib/libmdctreemaker.so
 should_transfer_files	= IF_NEEDED
 when_to_transfer_output = ON_EXIT
-error			= output/err/error_mc_cor_$(Process).err
+error			= output/err/error_mc_nzs_$(Process).err
 log = /tmp/jocl_$(Process).log
 queue 555

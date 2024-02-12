@@ -1,9 +1,0 @@
-executable = merge.sh
-arguments = 71 20231018_nopileup 0 0
-output = output/out/outputmerge.out
-should_transfer_files	= IF_NEEDED
-when_to_transfer_output = ON_EXIT
-error			= output/err/errormerge.err
-output			= output/out/outputmerge.out
-log = /tmp/jocl_merge.log
-queue 1

@@ -1,1 +1,0 @@
-CreateFileList.pl -type 12 -run 6 -n 10000 -embed DST_CALO_CLUSTER DST_GLOBAL DST_TRUTH_JET DST_TRUTH_G4HIT

@@ -1,9 +1,0 @@
-executable = merge.sh
-arguments = 30 20231113_nopileup_nzs 0 1
-output = output/out/outputmerge.out
-should_transfer_files	= IF_NEEDED
-when_to_transfer_output = ON_EXIT
-error			= output/err/errormerge_dat_nzs.err
-output			= output/out/outputmerge_dat_nzs.out
-log = /tmp/jocl_merge.log
-queue 1
