@@ -19,12 +19,12 @@
 #include <centrality/CentralityReco.h>
 #include <calotrigger/MinimumBiasClassifier.h>
 #include <G4Setup_sPHENIX.C>
-#include <energycorrection/EnergyCorrection.h>
+//#include <energycorrection/EnergyCorrection.h>
 
 using namespace std;
 
 R__LOAD_LIBRARY(libg4centrality.so)
-R__LOAD_LIBRARY(libEnergyCorrection.so)
+//R__LOAD_LIBRARY(libEnergyCorrection.so)
 R__LOAD_LIBRARY(libFROG.so)
 R__LOAD_LIBRARY(libg4jets.so)
 R__LOAD_LIBRARY(libg4vertex.so)
@@ -141,7 +141,7 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
       se->registerInputManager(in_4);
     }
 
-
+    /*
   EnergyCorrection *energycorrect;
   if(upweightb)
     {
@@ -159,18 +159,18 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
       energycorrect->SetUpWeightTruth(false);
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
     }
-  /*
-    PHG4CylinderCellReco *cemc_cells =
-        new PHG4CylinderCellReco("CEMCCYLCELLRECO");
-    cemc_cells->Detector("CEMC");
-    for (int i = G4CEMC::Min_cemc_layer; i <= G4CEMC::Max_cemc_layer; i++) {
-      const double radius = 95;
-      cemc_cells->cellsize(i, 2 * M_PI / 256. * radius, 2 * M_PI / 256. *
-    radius);
-    }
-    cemc_cells->Verbosity(1);
-    se->registerSubsystem(cemc_cells);
-  */
+  
+    //PHG4CylinderCellReco *cemc_cells =
+    //    new PHG4CylinderCellReco("CEMCCYLCELLRECO");
+    //cemc_cells->Detector("CEMC");
+    //for (int i = G4CEMC::Min_cemc_layer; i <= G4CEMC::Max_cemc_layer; i++) {
+    //  const double radius = 95;
+    //  cemc_cells->cellsize(i, 2 * M_PI / 256. * radius, 2 * M_PI / 256. *
+    //radius);
+    //}
+    //cemc_cells->Verbosity(1);
+    //se->registerSubsystem(cemc_cells);
+  
 
   PHG4FullProjSpacalCellReco *cemc_cells;
   if(upweightb)
@@ -396,6 +396,7 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
 
 	
     }
+    */
                                    
 // The calibrations have a validity range set by the beam clock which is not read out of the prdfs as of now
   
