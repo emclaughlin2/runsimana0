@@ -18,7 +18,7 @@
 #include <fun4all/Fun4AllRunNodeInputManager.h>
 #include <centrality/CentralityReco.h>
 #include <calotrigger/MinimumBiasClassifier.h>
-#include <G4Setup_sPHENIX.C>
+//#include <G4Setup_sPHENIX.C>
 //#include <energycorrection/EnergyCorrection.h>
 
 using namespace std;
@@ -47,7 +47,7 @@ bool file_exists(const char* filename)
 
 int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, int nevt = 0, int correct = 1, int zs = 0, int upweightb = 0, int doupweight = 0, int runnumber = 23727)
 {
-  cout << Enable::CDB << endl;
+  //cout << Enable::CDB << endl;
   int verbosity = 0;
   string filename = "output/evt/events_"+tag+(tag==""?"":"_");
   string dattag;
@@ -99,7 +99,7 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
     list3.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_truth_hijing.list");
     list4.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_mbd_epd_hijing.list");
   } else if (datormc == 2) {
-    list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo_nozero_epos.list");
+    list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo_cluster_epos.list");
     list2.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_global_epos.list");
     list3.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_truth_epos.list");
     list4.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_mbd_epd_epos.list");

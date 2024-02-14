@@ -1,5 +1,5 @@
 executable = dETdeta.sh
-arguments = $(Process) 02092024_test_emcal_calib 0 0 0 1 0 0 0 23727
+arguments = $(Process) p008_zs_23735 0 0 0 1 0 0 0 23735
 output = output/out/output_dat_cor_$(Process).out
 when_to_transfer_output = ON_EXIT
 error			= output/err/error_dat_cor_$(Process).err
