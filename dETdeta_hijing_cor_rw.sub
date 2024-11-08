@@ -1,8 +1,8 @@
 executable = dETdeta.sh
-arguments = $(Process) hijing_run101_reweighted_eta_-3_3 1 0 0 1 0 1 1 23727
-output = output/out/output_mc_cor_rw_$(Process).out
+arguments = $(Process) hijing_reweighted_brahms_run14_eta_-6_6 1 0 0 1 0 1 1 23727
+output = output/out/output_mc_cor_brahms_rw_$(Process).out
 when_to_transfer_output = ON_EXIT
-error                   = output/err/error_mc_cor_rw_$(Process).err
+error                   = output/err/error_mc_cor_brahms_rw_$(Process).err
 log = /tmp/egm2153_$(Process).log
 request_memory = 8GB
 queue 2500

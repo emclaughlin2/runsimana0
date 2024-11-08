@@ -10,6 +10,7 @@
 #include <phool/recoConsts.h>
 #include <TSystem.h>
 #include "mdctreemaker/MDCTreeMaker.h"
+#include <mdctreemaker/dNdetaTreeMaker.h>
 #include <caloreco/CaloTowerCalib.h>
 #include <caloreco/CaloTowerStatus.h>
 #include <g4mbd/MbdDigitization.h>
@@ -21,9 +22,12 @@
 #include <calotrigger/MinimumBiasClassifier.h>
 //#include <G4Setup_sPHENIX.C>
 #include <energycorrection/EnergyCorrection.h>
-#include "/sphenix/u/egm2153/sPHENIX-software/MDC2/submit/fm_0_20/pass2calo_nopileup_nozero/rundir/G4_CEmc_Spacal.C"
-#include "/sphenix/u/egm2153/sPHENIX-software/MDC2/submit/fm_0_20/pass2calo_nopileup_nozero/rundir/G4_HcalIn_ref.C"
-#include "/sphenix/u/egm2153/sPHENIX-software/MDC2/submit/fm_0_20/pass2calo_nopileup_nozero/rundir/G4_HcalOut_ref.C"
+//#include "/sphenix/u/egm2153/sPHENIX-software/MDC2/submit/fm_0_20/pass2calo_nopileup_nozero/rundir/G4_CEmc_Spacal.C"
+//#include "/sphenix/u/egm2153/sPHENIX-software/MDC2/submit/fm_0_20/pass2calo_nopileup_nozero/rundir/G4_HcalIn_ref.C"
+//#include "/sphenix/u/egm2153/sPHENIX-software/MDC2/submit/fm_0_20/pass2calo_nopileup_nozero/rundir/G4_HcalOut_ref.C"
+#include "/sphenix/u/egm2153/sPHENIX-software/sPHENIX-macros/common/G4_CEmc_Spacal.C"
+#include "/sphenix/u/egm2153/sPHENIX-software/sPHENIX-macros/common/G4_HcalIn_ref.C"
+#include "/sphenix/u/egm2153/sPHENIX-software/sPHENIX-macros/common/G4_HcalOut_ref.C"
 #include "Sys_Calo.C"
 
 using namespace std;
@@ -43,6 +47,7 @@ R__LOAD_LIBRARY(libmbd.so)
 R__LOAD_LIBRARY(libffamodules.so)
 R__LOAD_LIBRARY(libcentrality.so)
 R__LOAD_LIBRARY(libcalotrigger.so)
+R__LOAD_LIBRARY(libdNdetaTreeMaker.so)
 
 bool file_exists(const char* filename)
 {
@@ -59,7 +64,8 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
 
   //cout << Enable::CDB << endl;
   int verbosity = 0;
-  string filename = "output/evt/events_"+tag+(tag==""?"":"_"); 
+  //string filename = "output/evt/events_"+tag+(tag==""?"":"_"); // edited to put in tg location
+  string filename = "/sphenix/tg/tg01/commissioning/CaloCalibWG/egm2153/hcal_tsc_data/events_"+tag+(tag==""?"":"_"); 
   //string filename = "events_"+tag+(tag==""?"":"_");
   string dattag;
   switch(datormc) {
@@ -73,6 +79,7 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
   filename += dattag + "_"+cortag+"_" + to_string(nproc);
   filename += ".root";
   std::cout << filename << std::endl;
+  std::cout << nproc << std::endl;
   FROG *fr = new FROG();
     
   gSystem->Load("libfun4all.so");
@@ -87,7 +94,7 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
   // just if we set some flags somewhere in this macro
   recoConsts *rc =  recoConsts::instance();
   rc->set_uint64Flag("TIMESTAMP",runnumber);
-  if (datormc == 0) { rc->set_StringFlag("CDB_GLOBALTAG","2023p011"); }
+  if (datormc == 0) { rc->set_StringFlag("CDB_GLOBALTAG","2023p015"); }
   else { rc->set_StringFlag("CDB_GLOBALTAG","MDC2"); } //"ProdA_2023");  "2023p007" 
   //rc->set_IntFlag("RANDOMSEED",158804);
 
@@ -103,30 +110,32 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
   string line5;
 
   if (datormc == 0) {
-    string datafilelist = "/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo-000";
+    string datafilelist = "/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo_run1auau-000";
     datafilelist += to_string(runnumber) + ".list";
     list1.open(datafilelist);
   } else if (datormc == 1) {
-    list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo_nozero_hijing.list");
-    list2.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_global_hijing.list");
-    list3.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_truth_hijing.list");
-    //list4.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_mbd_epd_hijing.list"); // want nopileup option
+    //list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo_nozero_hijing.list");
+    list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_global_hijing.list");
+    list2.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_truth_hijing.list");
+    list3.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_mbd_epd_hijing.list"); // want nopileup option
     list4.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/g4hits_hijing.list");
     //if (upweightb) { list5.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/g4hits_hijing.list"); }
   } else if (datormc == 2) {
-    list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo_cluster_epos.list");
-    list2.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_global_epos.list");
-    list3.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_truth_epos.list");
-    //list4.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_mbd_epd_epos.list");
-    if (upweightb) { list5.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/g4hits_epos.list"); }
+    //list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo_cluster_epos.list");
+    list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_global_epos.list");
+    list2.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_truth_epos.list");
+    list3.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_mbd_epd_epos.list"); // want nopileup option
+    list4.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/g4hits_epos.list");
   } else if (datormc == 3) {
-    list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo_nozero_ampt.list");
-    list2.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_global_ampt.list");
-    list3.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_truth_ampt.list");
-    //list4.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_mbd_epd_ampt.list");
-    if (upweightb) { list5.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/g4hits_ampt.list"); }
+    //list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_calo_nozero_ampt.list");
+    list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_global_ampt.list");
+    list2.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_truth_ampt.list");
+    list3.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_mbd_epd_ampt.list"); // wave nopileup option
+    list4.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/g4hits_ampt.list");
   } else if (datormc == 4) {
     list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_hcal_pedestal_data.list");
+  } else if (datormc == 5) {
+    list1.open("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/dst_files/dst_emcal_pedestal_data.list");
   }
 
   for(int i=0; i<nproc+1; i++) 
@@ -154,7 +163,7 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
       in_4->AddFile(line4);
       //if (upweightb) { in_5->AddFile(line5); }
     }
-  if (!upweightb) se->registerInputManager( in_1 );
+  se->registerInputManager( in_1 );
   if(datormc > 0 && datormc < 4)
     {
       se->registerInputManager(in_2);
@@ -167,36 +176,39 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
   if(upweightb)
     {
       energycorrect = new EnergyCorrection();
-      energycorrect->Verbosity(1);
+      energycorrect->Verbosity(0);
       if (datormc == 1) { energycorrect->SetGeneratorType("HIJING"); }
       else if (datormc == 2) { energycorrect->SetGeneratorType("EPOS"); }
       else if (datormc == 3) { energycorrect->SetGeneratorType("AMPT"); }
       energycorrect->SetHitNodeName("G4HIT_CEMC");
-      energycorrect->SetMinEta(-2.5); 
-      energycorrect->SetMaxEta(2.5); 
-      energycorrect->SetUpweightTruth((doupweight?true:false)); //only want to upweight the truth once
+      energycorrect->SetMinEta(-6.0); 
+      energycorrect->SetMaxEta(6.0); 
+      energycorrect->SetRapidityDep(false);
+      energycorrect->SetUpweightTruth(false);
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
       
       energycorrect = new EnergyCorrection();
-      energycorrect->Verbosity(1);
+      energycorrect->Verbosity(0);
       if (datormc == 1) { energycorrect->SetGeneratorType("HIJING"); }
       else if (datormc == 2) { energycorrect->SetGeneratorType("EPOS"); }
       else if (datormc == 3) { energycorrect->SetGeneratorType("AMPT"); }
       energycorrect->SetHitNodeName("G4HIT_HCALIN");
-      energycorrect->SetMinEta(-2.5); 
-      energycorrect->SetMaxEta(2.5); 
+      energycorrect->SetMinEta(-6.0); 
+      energycorrect->SetMaxEta(6.0); 
+      energycorrect->SetRapidityDep(false);
       energycorrect->SetUpweightTruth(false);
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
       
       energycorrect = new EnergyCorrection();
-      energycorrect->Verbosity(1);
+      energycorrect->Verbosity(0);
       if (datormc == 1) { energycorrect->SetGeneratorType("HIJING"); }
       else if (datormc == 2) { energycorrect->SetGeneratorType("EPOS"); }
       else if (datormc == 3) { energycorrect->SetGeneratorType("AMPT"); }
       energycorrect->SetHitNodeName("G4HIT_HCALOUT");
-      energycorrect->SetMinEta(-2.5); 
-      energycorrect->SetMaxEta(2.5); 
-      energycorrect->SetUpweightTruth(false);
+      energycorrect->SetMinEta(-6.0); 
+      energycorrect->SetMaxEta(6.0); 
+      energycorrect->SetRapidityDep(false);
+      energycorrect->SetUpweightTruth((doupweight?true:false)); //only want to upweight the truth once
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
     }
 
@@ -251,17 +263,17 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
 // The calibrations have a validity range set by the beam clock which is not read out of the prdfs as of now
   
   int cont = 0;
-  
+  /*
   MbdDigitization* mbddigi;
   MbdReco* mbdreco;
-  if(datormc)
+  if(datormc > 0 && datormc < 4)
     {
       mbdreco = new MbdReco();
       mbddigi = new MbdDigitization();
       se->registerSubsystem(mbddigi);
       se->registerSubsystem(mbdreco);
     }
-
+  */
 
   if(!datormc) {
     MinimumBiasClassifier *mb = new MinimumBiasClassifier();
@@ -269,14 +281,10 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
     se->registerSubsystem(mb);
   }
   
-  if (datormc != 4) {
+  if (datormc != 4 && datormc != 5) {
   CentralityReco* cent = new CentralityReco();
   //cent->Verbosity(2);
   se->registerSubsystem( cent ); 
-  }
-
-  if(!datormc) {
-    Register_Tower_sys();
   }
 
   //CDBInterface *cdb = CDBInterface::instance();
@@ -287,31 +295,48 @@ int run_dETdeta(int nproc = 0, string tag = "", int datormc = 0, int debug = 0, 
   // option for testing new emcal calibrations with direct URL instead of CDB
   
   if (!datormc) {
+    /*
     std::cout << "Calibrating EMCal" << std::endl;
     CaloTowerCalib *calibEMC = new CaloTowerCalib("CEMCCALIB");
     calibEMC->set_detector_type(CaloTowerDefs::CEMC);
-    calibEMC->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/emcal_calib_year1/23726_23746/calib_emcal_23726_23746.root");
-    //calibEMC->set_directURL("/sphenix/user/egm2153/calib_study/detdeta/testing/new_emcal_calib.root");
+    calibEMC->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/emcal_calib_year1/fin23714_23746/calib_emcal_23726_23746.root");
     se->registerSubsystem(calibEMC);
-  }
-
-  if (!datormc) {
+    */
     CaloTowerStatus *statusHCalIn = new CaloTowerStatus("HCALINSTATUS");
     statusHCalIn->set_detector_type(CaloTowerDefs::HCALIN);
     statusHCalIn->set_time_cut(2);
     statusHCalIn->set_fraction_badChi2_threshold(0.02);
     se->registerSubsystem(statusHCalIn);
-
-    std::cout << "Calibrating IHcal" << std::endl;
-    CaloTowerCalib *calibIHCal = new CaloTowerCalib("HCALIN");
+    
+    std::cout << "Calibrating IHCal" << std::endl;
+    CaloTowerCalib *calibIHCal = new CaloTowerCalib("HCALINCALIB");
     calibIHCal->set_detector_type(CaloTowerDefs::HCALIN);
+    calibIHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_tsc_cos/cdbConv/ihcal_cdb_calib.root");
+    //calibIHCal->set_directURL("/sphenix/u/bseidlitz/work/forChris/calibHCal_apr7/ihcal_cdb_calib.root");
     se->registerSubsystem(calibIHCal);
+    
+    std::cout << "Calibrating OHCal" << std::endl;
+    CaloTowerCalib *calibOHCal = new CaloTowerCalib("HCALOUTCALIB");
+    calibOHCal->set_detector_type(CaloTowerDefs::HCALOUT);
+    calibOHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_tsc_cos/cdbConv/ohcal_cdb_calib.root");
+    //calibOHCal->set_directURL("/sphenix/u/bseidlitz/work/forChris/calibHCal_apr7/ohcal_cdb_calib.root");
+    se->registerSubsystem(calibOHCal);
+    
+  }
+
+  if(!datormc) {
+    Register_Tower_sys();
   }
   
   // option for testing new emcal calibrations with direct URL instead of CDB
   if (datormc == 4) datormc = 0;
+  if (datormc == 5) datormc = 0;
+  if (datormc == 2) datormc = 1;
+  if (datormc == 3) datormc = 1;
   MDCTreeMaker *tt = new MDCTreeMaker("MDCTreeMaker", filename, datormc, debug, correct, emcal_node, ihcal_node, ohcal_node);
-  se->registerSubsystem( tt );
+  se->registerSubsystem( tt ); 
+  //dNdetaTreeMaker *ttt = new dNdetaTreeMaker("dNdetaTreeMaker", filename, datormc, debug, correct, emcal_node, ihcal_node, ohcal_node);
+  //se->registerSubsystem(ttt);
   se->Print("NODETREE");
   se->run(nevt);
   cout << "Ran all events" << endl;
