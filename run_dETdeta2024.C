@@ -105,7 +105,7 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
   else if (datormc > 0 && datormc < 4) rc->set_uint64Flag("TIMESTAMP",14);
   else rc->set_uint64Flag("TIMESTAMP",runnumber);
 
-  if (datormc == 0 || datormc == 6) { rc->set_StringFlag("CDB_GLOBALTAG","ProdA_2024"); }
+  if (datormc == 0 || datormc == 6) { rc->set_StringFlag("CDB_GLOBALTAG","2024p009"); }
   else { rc->set_StringFlag("CDB_GLOBALTAG","MDC2"); } //"ProdA_2023");  "2023p007" 
   //rc->set_IntFlag("RANDOMSEED",158804);
 
@@ -200,7 +200,6 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
     Process_Calo_Fitting(datormc);
 
     CaloFittingQA *ca = new CaloFittingQA("CaloFittingQA");
-    ca->set_debug(false);
     if (datormc == 6) ca->set_simflag(true);
     se->registerSubsystem(ca);
 
@@ -349,12 +348,17 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
 
     MinimumBiasClassifier *mb = new MinimumBiasClassifier();
     mb->Verbosity(verbosity);
+    mb->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root");
+    mb->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root");
     se->registerSubsystem(mb);
   }
   
   if (datormc == 0) {
   CentralityReco* cent = new CentralityReco();
   //cent->Verbosity(2);
+  cent->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root");
+  cent->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root");
+  cent->setOverwriteDivs("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/divs/cdb_centrality_54912.root");
   se->registerSubsystem( cent ); 
   }
 

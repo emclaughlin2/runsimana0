@@ -40,7 +40,7 @@ void Process_Calo_Calib(int data = 0)
   CaloTowerCalib *calibEMC = new CaloTowerCalib("CEMCCALIB");
   calibEMC->set_detector_type(CaloTowerDefs::CEMC);
   calibEMC->setFieldName("Femc_datadriven_qm1_correction");
-  calibEMC->set_directURL("/sphenix/user/egm2153/calib_study/emcal_calib_year1/54908_54921/local_calib_copy_iter33.root");
+  calibEMC->set_directURL("/sphenix/user/egm2153/calib_study/emcal_calib_year1/ana450_2024p009_54912_54921/local_calib_copy_iter15.root");
   if (data == 0) calibEMC->set_directURL_ZScrosscalib("/sphenix/user/egm2153/calib_study/detdeta/analysis/Run2024/CEMC_ZSCrossCalib_ana450_2024p009_54912.root");
   se->registerSubsystem(calibEMC);
 
@@ -49,7 +49,7 @@ void Process_Calo_Calib(int data = 0)
   calibOHCal->set_detector_type(CaloTowerDefs::HCALOUT);
   //calibOHCal->setFieldName("ohcal_cosmic_calibration"); 
   //calibOHCal->set_directURL("/sphenix/user/hanpuj/HCalCosmics/offline/calibration_factor/ohcal_cosmic_calibration_12.root");
-  calibOHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_towerSlope_y2/tsc_cos_comb/ohcal_cdb_tsc_cos_calib.root");
+  calibOHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_towerSlope_y2/tsc_cos_comb/AuAuOutput/ohcal_cdb_tsc_cos_calib.root");
   if (data == 0) calibOHCal->set_directURL_ZScrosscalib("/sphenix/user/egm2153/calib_study/detdeta/analysis/Run2024/HCALOUT_ZSCrossCalib_ana450_2024p009_54912.root");
   se->registerSubsystem(calibOHCal);
 
@@ -58,7 +58,7 @@ void Process_Calo_Calib(int data = 0)
   calibIHCal->set_detector_type(CaloTowerDefs::HCALIN);
   //calibIHCal->setFieldName("ihcal_cosmic_calibration"); 
   //calibIHCal->set_directURL("/sphenix/user/hanpuj/HCalCosmics/offline/calibration_factor/ihcal_cosmic_calibration_4.root");
-  calibIHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_towerSlope_y2/tsc_cos_comb/ihcal_cdb_tsc_cos_calib.root");
+  calibIHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_towerSlope_y2/tsc_cos_comb/AuAuOutput/ihcal_cdb_tsc_cos_calib.root");
   if (data == 0) calibIHCal->set_directURL_ZScrosscalib("/sphenix/user/egm2153/calib_study/detdeta/analysis/Run2024/HCALIN_ZSCrossCalib_ana450_2024p009_54912.root");
   se->registerSubsystem(calibIHCal);
 
