@@ -107,7 +107,7 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
 
   if (datormc == 0 || datormc == 6) { rc->set_StringFlag("CDB_GLOBALTAG","2024p009"); }
   else { rc->set_StringFlag("CDB_GLOBALTAG","MDC2"); } //"ProdA_2023");  "2023p007" 
-  //rc->set_IntFlag("RANDOMSEED",158804);
+  rc->set_IntFlag("RANDOMSEED",158804);
 
   ifstream list1;
   string line1;
@@ -226,7 +226,7 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
     ohcal_energy_outfile += "_rw_ampt.root";
   }
 
-  if(upweightb) // edited to look at radius weighting
+  if(upweightb)
     {
       energycorrect = new EnergyCorrection("EnergyCorrectEMCal", emcal_energy_outfile.c_str());
       energycorrect->Verbosity(0);
@@ -238,7 +238,6 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
       energycorrect->SetMaxEta(2.5); 
       energycorrect->SetRapidityDep(false);
       energycorrect->SetUpweightTruth(false);
-      energycorrect->SetParticleReweight(true); // edited to look at radius weighting
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
       
       energycorrect = new EnergyCorrection("EnergyCorrectIHCal", ihcal_energy_outfile.c_str());
@@ -251,7 +250,6 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
       energycorrect->SetMaxEta(2.5); 
       energycorrect->SetRapidityDep(false);
       energycorrect->SetUpweightTruth(false);
-      energycorrect->SetParticleReweight(true); // edited to look at radius weighting
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
       
       energycorrect = new EnergyCorrection("EnergyCorrectOHCal", ohcal_energy_outfile.c_str());
@@ -264,8 +262,6 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
       energycorrect->SetMaxEta(2.5); 
       energycorrect->SetRapidityDep(false);
       energycorrect->SetUpweightTruth((doupweight?true:false)); //only want to upweight the truth once
-      energycorrect->SetParticleReweight(true); // edited to look at radius weighting
-      energycorrect->SetRadiusReweight(true); // edited to look at radius weighting 
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
     }
 
@@ -348,17 +344,17 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
 
     MinimumBiasClassifier *mb = new MinimumBiasClassifier();
     mb->Verbosity(verbosity);
-    mb->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root");
-    mb->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root");
+    //mb->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root");
+    //mb->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root");
     se->registerSubsystem(mb);
   }
   
   if (datormc == 0) {
   CentralityReco* cent = new CentralityReco();
   //cent->Verbosity(2);
-  cent->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root");
-  cent->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root");
-  cent->setOverwriteDivs("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/divs/cdb_centrality_54912.root");
+  //cent->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root");
+  //cent->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root");
+  //cent->setOverwriteDivs("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/divs/cdb_centrality_54912.root");
   se->registerSubsystem( cent ); 
   }
 
