@@ -1,0 +1,8 @@
+executable = dETdeta_2024.sh
+arguments = $(Process) epos_reweighted_brahms_eta_-6_6_run14_fixed_build 2 1 0 1 0 1 1 14
+output = output/out/output_epos_brahms_rw_fixed_build_2024_$(Process).out
+when_to_transfer_output = ON_EXIT
+error                   = output/err/error_epos_brahms_rw_fixed_build_2024_$(Process).err
+log = /tmp/egm2153_$(Process).log
+request_memory = 8GB
+queue 5000

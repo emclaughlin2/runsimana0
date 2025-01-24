@@ -234,9 +234,9 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
       else if (datormc == 2) { energycorrect->SetGeneratorType("EPOS"); }
       else if (datormc == 3) { energycorrect->SetGeneratorType("AMPT"); }
       energycorrect->SetHitNodeName("G4HIT_CEMC");
-      energycorrect->SetMinEta(-2.5); 
-      energycorrect->SetMaxEta(2.5); 
-      energycorrect->SetRapidityDep(false);
+      energycorrect->SetMinEta(-6.0); 
+      energycorrect->SetMaxEta(6.0); 
+      energycorrect->SetRapidityDep(true);
       energycorrect->SetUpweightTruth(false);
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
       
@@ -246,9 +246,9 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
       else if (datormc == 2) { energycorrect->SetGeneratorType("EPOS"); }
       else if (datormc == 3) { energycorrect->SetGeneratorType("AMPT"); }
       energycorrect->SetHitNodeName("G4HIT_HCALIN");
-      energycorrect->SetMinEta(-2.5); 
-      energycorrect->SetMaxEta(2.5); 
-      energycorrect->SetRapidityDep(false);
+      energycorrect->SetMinEta(-6.0); 
+      energycorrect->SetMaxEta(6.0); 
+      energycorrect->SetRapidityDep(true);
       energycorrect->SetUpweightTruth(false);
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
       
@@ -258,9 +258,9 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
       else if (datormc == 2) { energycorrect->SetGeneratorType("EPOS"); }
       else if (datormc == 3) { energycorrect->SetGeneratorType("AMPT"); }
       energycorrect->SetHitNodeName("G4HIT_HCALOUT");
-      energycorrect->SetMinEta(-2.5); 
-      energycorrect->SetMaxEta(2.5); 
-      energycorrect->SetRapidityDep(false);
+      energycorrect->SetMinEta(-6.0); 
+      energycorrect->SetMaxEta(6.0); 
+      energycorrect->SetRapidityDep(true);
       energycorrect->SetUpweightTruth((doupweight?true:false)); //only want to upweight the truth once
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
     }
@@ -344,16 +344,16 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
 
     MinimumBiasClassifier *mb = new MinimumBiasClassifier();
     mb->Verbosity(verbosity);
-    //mb->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root");
-    //mb->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root");
+    //mb->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root"); <- will change run by run
+    //mb->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root"); <- will change run by run
     se->registerSubsystem(mb);
   }
   
   if (datormc == 0) {
   CentralityReco* cent = new CentralityReco();
   //cent->Verbosity(2);
-  //cent->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root");
-  //cent->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root");
+  //cent->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_54912.root"); <- will change run by run
+  //cent->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_54912.root"); <- will change run by run
   //cent->setOverwriteDivs("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/divs/cdb_centrality_54912.root");
   se->registerSubsystem( cent ); 
   }
