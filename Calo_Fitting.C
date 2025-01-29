@@ -30,7 +30,7 @@ void Process_Calo_Fitting(int data = 0)
     ctbEMCal->set_builder_type(buildertype);
     ctbEMCal->set_offlineflag(true);
     ctbEMCal->set_nsamples(12);
-    ctbEMCal->set_softwarezerosuppression(true, 100);
+    ctbEMCal->set_softwarezerosuppression(true, 200);
     ctbEMCal->set_bitFlipRecovery(true);
     se->registerSubsystem(ctbEMCal);
 
@@ -40,7 +40,7 @@ void Process_Calo_Fitting(int data = 0)
     ctbIHCal->set_builder_type(buildertype);
     ctbIHCal->set_offlineflag();
     ctbIHCal->set_nsamples(12);
-    ctbIHCal->set_softwarezerosuppression(true, 50);
+    ctbIHCal->set_softwarezerosuppression(true, 100);
     ctbIHCal->set_bitFlipRecovery(true);
     se->registerSubsystem(ctbIHCal);
 
@@ -50,7 +50,7 @@ void Process_Calo_Fitting(int data = 0)
     ctbOHCal->set_builder_type(buildertype);
     ctbOHCal->set_offlineflag();
     ctbOHCal->set_nsamples(12);
-    ctbOHCal->set_softwarezerosuppression(true, 50);
+    ctbOHCal->set_softwarezerosuppression(true, 100);
     ctbOHCal->set_bitFlipRecovery(true);
     se->registerSubsystem(ctbOHCal);
 
@@ -72,7 +72,7 @@ void Process_Calo_Fitting(int data = 0)
     ctbEMCal->set_nsamples(12);
     ctbEMCal->set_dataflag(false);
     ctbEMCal->set_inputNodePrefix("PEDESTAL_");
-    ctbEMCal->set_softwarezerosuppression(true,100);
+    ctbEMCal->set_softwarezerosuppression(true, 200);
     ctbEMCal->set_bitFlipRecovery(true);
     se->registerSubsystem(ctbEMCal);
 
@@ -83,7 +83,7 @@ void Process_Calo_Fitting(int data = 0)
     ctbIHCal->set_nsamples(12);
     ctbIHCal->set_dataflag(false);
     ctbIHCal->set_inputNodePrefix("PEDESTAL_");
-    ctbIHCal->set_softwarezerosuppression(true, 50);
+    ctbIHCal->set_softwarezerosuppression(true, 100);
     ctbIHCal->set_bitFlipRecovery(true);
     se->registerSubsystem(ctbIHCal);
 
@@ -94,7 +94,7 @@ void Process_Calo_Fitting(int data = 0)
     ctbOHCal->set_nsamples(12);
     ctbOHCal->set_dataflag(false);
     ctbOHCal->set_inputNodePrefix("PEDESTAL_");
-    ctbOHCal->set_softwarezerosuppression(true, 50);
+    ctbOHCal->set_softwarezerosuppression(true, 100);
     ctbOHCal->set_bitFlipRecovery(true);
     se->registerSubsystem(ctbOHCal);
   }
