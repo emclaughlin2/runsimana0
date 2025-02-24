@@ -1,8 +1,8 @@
 executable = dETdeta_2024.sh
-arguments = $(Process) hijing_run14_fixed_build 1 1 0 1 0 0 0 14
-output = output/out/output_hijing_fb_2024_$(Process).out
+arguments = $(Process) hijing_run14_waveformsim_fixed_build 1 1 0 1 0 0 0 14
+output = output/out/output_hijing_waveformsim_fb_2024_$(Process).out
 when_to_transfer_output = ON_EXIT
-error                   = output/err/error_hijing_fb_2024_$(Process).err
+error                   = output/err/error_hijing_waveformsim_fb_2024_$(Process).err
 log = /tmp/egm2153_$(Process).log
 request_memory = 8GB
 queue 5000

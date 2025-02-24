@@ -377,7 +377,7 @@ void HCALOuter_Towers()
     caloWaveformSim->set_timewidth(0.2);
     caloWaveformSim->set_peakpos(6);
     // caloWaveformSim->Verbosity(2);
-    // caloWaveformSim->set_noise_type(CaloWaveformSim::NOISE_NONE);
+    caloWaveformSim->set_noise_type(CaloWaveformSim::NOISE_NONE);
     se->registerSubsystem(caloWaveformSim);
 
     CaloTowerBuilder *ca2 = new CaloTowerBuilder();
@@ -386,7 +386,7 @@ void HCALOuter_Towers()
     ca2->set_dataflag(false);
     ca2->set_processing_type(CaloWaveformProcessing::TEMPLATE);
     ca2->set_builder_type(CaloTowerDefs::kWaveformTowerSimv1);
-    ca2->set_softwarezerosuppression(true, 30);
+    ca2->set_softwarezerosuppression(true, -9999);
     se->registerSubsystem(ca2);
 
     CaloTowerStatus *statusHCALOUT = new CaloTowerStatus("HCALOUTSTATUS");

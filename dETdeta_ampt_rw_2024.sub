@@ -1,8 +1,8 @@
 executable = dETdeta_2024.sh
-arguments = $(Process) ampt_reweighted_run14_waveformsim_fixed_build 3 0 0 1 0 1 1 14
-output = output/out/output_ampt_rw_waveformsim_fixed_build_2024_$(Process).out
+arguments = $(Process) ampt_reweighted_run14_waveformsim_nonoise_nozs_fixed_build 3 0 0 1 0 1 1 14
+output = /sphenix/u/egm2153/output/out/output_ampt_rw_waveformsim_nonoise_fixed_build_2024_$(Process).out
 when_to_transfer_output = ON_EXIT
-error                   = output/err/error_ampt_rw_waveformsim_fixed_build_2024_$(Process).err
+error                   = /sphenix/u/egm2153/output/err/error_ampt_rw_waveformsim_nonoise_fixed_build_2024_$(Process).err
 log = /tmp/egm2153_$(Process).log
-request_memory = 8GB
+request_memory = 12GB
 queue 5000

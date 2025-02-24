@@ -333,7 +333,7 @@ void CEMC_Towers()
     //  caloWaveformSim->set_pedestal_scale(0.77);
     //}
     caloWaveformSim->Verbosity(2);
-    // caloWaveformSim->set_noise_type(CaloWaveformSim::NOISE_NONE);
+    caloWaveformSim->set_noise_type(CaloWaveformSim::NOISE_NONE);
     caloWaveformSim->set_calibName("cemc_pi0_twrSlope_v1_default");
     se->registerSubsystem(caloWaveformSim);
 
@@ -344,7 +344,7 @@ void CEMC_Towers()
     ca2->set_processing_type(CaloWaveformProcessing::TEMPLATE);
     ca2->set_builder_type(CaloTowerDefs::kWaveformTowerv2);
     // match our current ZS threshold ~60ADC for emcal
-    ca2->set_softwarezerosuppression(true, 60);
+    ca2->set_softwarezerosuppression(true, -9999);
     se->registerSubsystem(ca2);
 
     CaloTowerStatus *statusEMC = new CaloTowerStatus("CEMCSTATUS");

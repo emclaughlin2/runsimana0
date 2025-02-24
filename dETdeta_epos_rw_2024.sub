@@ -1,5 +1,5 @@
 executable = dETdeta_2024.sh
-arguments = $(Process) epos_reweighted_run14_waveformsim_fixed_build 2 1 0 1 0 1 1 14
+arguments = $(Process) epos_reweighted_run14_waveformsim_nonoise_nozs_fixed_build 2 1 0 1 0 1 1 14
 output = output/out/output_epos_rw_waveformsim_fixed_build_2024_$(Process).out
 when_to_transfer_output = ON_EXIT
 error                   = output/err/error_epos_rw_waveformsim_fixed_build_2024_$(Process).err
