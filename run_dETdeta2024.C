@@ -236,9 +236,9 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
       else if (datormc == 2) { energycorrect->SetGeneratorType("EPOS"); }
       else if (datormc == 3) { energycorrect->SetGeneratorType("AMPT"); }
       energycorrect->SetHitNodeName("G4HIT_CEMC");
-      energycorrect->SetMinEta(-2.5); 
-      energycorrect->SetMaxEta(2.5); 
-      energycorrect->SetRapidityDep(false);
+      energycorrect->SetMinEta(-6.0); 
+      energycorrect->SetMaxEta(6.0); 
+      energycorrect->SetRapidityDep(true);
       energycorrect->SetUpweightTruth(false);
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
       
@@ -248,9 +248,9 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
       else if (datormc == 2) { energycorrect->SetGeneratorType("EPOS"); }
       else if (datormc == 3) { energycorrect->SetGeneratorType("AMPT"); }
       energycorrect->SetHitNodeName("G4HIT_HCALIN");
-      energycorrect->SetMinEta(-2.5); 
-      energycorrect->SetMaxEta(2.5); 
-      energycorrect->SetRapidityDep(false);
+      energycorrect->SetMinEta(-6.0); 
+      energycorrect->SetMaxEta(6.0); 
+      energycorrect->SetRapidityDep(true);
       energycorrect->SetUpweightTruth(false);
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
       
@@ -260,9 +260,9 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
       else if (datormc == 2) { energycorrect->SetGeneratorType("EPOS"); }
       else if (datormc == 3) { energycorrect->SetGeneratorType("AMPT"); }
       energycorrect->SetHitNodeName("G4HIT_HCALOUT");
-      energycorrect->SetMinEta(-2.5); 
-      energycorrect->SetMaxEta(2.5); 
-      energycorrect->SetRapidityDep(false);
+      energycorrect->SetMinEta(-6.0); 
+      energycorrect->SetMaxEta(6.0); 
+      energycorrect->SetRapidityDep(true);
       energycorrect->SetUpweightTruth((doupweight?true:false)); //only want to upweight the truth once
       if(upweightb && datormc) se->registerSubsystem(energycorrect);
     }
