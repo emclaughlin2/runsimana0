@@ -36,9 +36,6 @@
 #include <calovalid/CaloFittingQA.h>
 #include <QA.C>
 #include <phool/PHRandomSeed.h>
-//#include <litecaloeval/LiteCaloEval.h>
-//#include <calib_emc_pi0/pi0EtaByEta.h>
-
 
 using namespace std;
 
@@ -60,8 +57,6 @@ R__LOAD_LIBRARY(libcalotrigger.so)
 R__LOAD_LIBRARY(libglobalvertex.so)
 R__LOAD_LIBRARY(libzdcinfo.so)
 R__LOAD_LIBRARY(libcalovalid.so)
-//R__LOAD_LIBRARY(libLiteCaloEvalTowSlope.so)
-//R__LOAD_LIBRARY(libcalibCaloEmc_pi0.so)
 
 bool file_exists(const char* filename)
 {
@@ -290,15 +285,19 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
     hitsin->Repeat();
     se->registerInputManager(hitsin);
 
-    Enable::CEMC_TOWERINFO = true;
-    Enable::HCALIN_TOWERINFO = true;
-    Enable::HCALOUT_TOWERINFO = true;
+    Enable::CEMC_TOWERINFO = false;
+    Enable::HCALIN_TOWERINFO = false;
+    Enable::HCALOUT_TOWERINFO = false;
+    
+    CEMC_Cells();
+    HCALInner_Cells();
+    HCALOuter_Cells();
 
     CEMC_Towers();
     HCALInner_Towers();
     HCALOuter_Towers();
 
-    Process_Calo_Calib(datormc);
+    //Process_Calo_Calib(datormc);
 
   }
                                    
@@ -350,23 +349,6 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
   //if(!datormc) {
   //  Register_Tower_sys();
   //}
-  /*
-  string pi0outfile = "/sphenix/tg/tg01/commissioning/CaloCalibWG/egm2153/detdeta_run24auau/pi0_events_" + tag + "_" + to_string(runnumber) + "_" + to_string(nproc) + ".root";
-  pi0EtaByEta *ca = new pi0EtaByEta("calomodulename", pi0outfile.c_str());
-  ca->set_timing_cut_width(16);
-  ca->apply_vertex_cut(false);
-  ca->set_vertex_cut(20.);
-  ca->set_pt1BaseClusCut(1.3);
-  ca->set_pt2BaseClusCut(0.7);
-  ca->set_NclusDeptFac(1.4);
-  ca->set_RunTowByTow(false);
-  if (datormc == 0) ca->set_reqMinBias(true);
-  else ca->set_reqMinBias(false);
-  ca->set_GlobalVertexType(GlobalVertex::MBD);
-  ca->set_requireVertex(true);
-  ca->set_mcsmearing(false);
-  se->registerSubsystem(ca);
-  */
 
   // option for testing new emcal calibrations with direct URL instead of CDB
   int dataormc = datormc;

@@ -302,7 +302,7 @@ void HCALInner_Towers()
     TowerDigitizer->set_pedstal_width_ADC(1);  // From Jin's guess. No EMCal High Gain data yet! TODO: update
     TowerDigitizer->set_photonelec_ADC(32. / 5.);
     TowerDigitizer->set_photonelec_yield_visible_GeV(32. / 5 / (0.4e-3));
-    TowerDigitizer->set_zero_suppression_ADC(-0);  // no-zero suppression
+    TowerDigitizer->set_zero_suppression_ADC(-9999);  // no-zero suppression
     TowerDigitizer->Verbosity(verbosity);
     if (!Enable::HCALIN_G4Hit) TowerDigitizer->set_towerinfo(RawTowerDigitizer::ProcessTowerType::kTowerInfoOnly);  // just use towerinfo
     se->registerSubsystem(TowerDigitizer);

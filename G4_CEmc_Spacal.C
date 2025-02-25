@@ -271,8 +271,8 @@ void CEMC_Towers()
                                                   //   TowerDigitizer->set_pedstal_width_ADC(8);  // eRD1 test beam setting
     TowerDigitizer->set_photonelec_ADC(1);        // not simulating ADC discretization error
     TowerDigitizer->set_photonelec_yield_visible_GeV(photoelectron_per_GeV / sampling_fraction);
-    TowerDigitizer->set_variable_zero_suppression(true);                                                          // read zs values from calibrations file comment next line if true
-                                                                                                                  //   TowerDigitizer->set_zero_suppression_ADC(16);  // eRD1 test beam setting
+    TowerDigitizer->set_variable_zero_suppression(false);                                                          // read zs values from calibrations file comment next line if true
+    TowerDigitizer->set_zero_suppression_ADC(-9999);  // eRD1 test beam setting
     if (!Enable::CEMC_G4Hit) TowerDigitizer->set_towerinfo(RawTowerDigitizer::ProcessTowerType::kTowerInfoOnly);  // just use towerinfo
     if (Enable::CDB)
     {

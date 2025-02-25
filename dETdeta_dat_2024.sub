@@ -1,5 +1,5 @@
 executable = dETdeta_2024.sh
-arguments = $(Process) ana450_2024p009_54912_fixed_build 0 1 0 1 0 0 0 54912
+arguments = $(Process) ana450_2024p009_54912_fixed_build_emcal_calib_26 0 1 0 1 0 0 0 54912
 output = output/out/output_dat_fixed_build_54912_$(Process).out
 when_to_transfer_output = ON_EXIT
 error			= output/err/error_dat_fixed_build_54912_$(Process).err

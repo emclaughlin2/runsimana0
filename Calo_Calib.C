@@ -52,7 +52,7 @@ void Process_Calo_Calib(int data = 0)
     CaloTowerCalib *calibEMC = new CaloTowerCalib("CEMCCALIB");
     calibEMC->set_detector_type(CaloTowerDefs::CEMC);
     calibEMC->setFieldName("Femc_datadriven_qm1_correction");
-    calibEMC->set_directURL("/sphenix/user/egm2153/calib_study/emcal_calib_year1/ana450_2024p009_54912_54921/local_calib_copy_iter15.root");
+    calibEMC->set_directURL("/sphenix/user/egm2153/calib_study/emcal_calib_year1/ana450_2024p009_54912_54921/local_calib_copy_iter26.root");
     if (data == 0) calibEMC->set_directURL_ZScrosscalib("/sphenix/user/egm2153/calib_study/detdeta/analysis/Run2024/CEMC_ZSCrossCalib_ana450_2024p009_54912.root");
     se->registerSubsystem(calibEMC);
 
