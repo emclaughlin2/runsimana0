@@ -59,18 +59,20 @@ void Process_Calo_Calib(int data = 0)
     std::cout << "Calibrating OHcal" << std::endl;
     CaloTowerCalib *calibOHCal = new CaloTowerCalib("HCALOUT");
     calibOHCal->set_detector_type(CaloTowerDefs::HCALOUT);
-    //calibOHCal->setFieldName("ohcal_cosmic_calibration"); 
+    calibOHCal->setFieldName("HCALOUT_calib_ADC_to_ETower"); 
     //calibOHCal->set_directURL("/sphenix/user/hanpuj/HCalCosmics/offline/calibration_factor/ohcal_cosmic_calibration_12.root");
-    calibOHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_towerSlope_y2/tsc_cos_comb/AuAuOutput/ohcal_cdb_tsc_cos_calib.root");
+    calibOHCal->set_directURL("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/calib_files/HCALOUT_calib_ADC_to_ETower_old_mc_digi_scale_54912.root");
+    //calibOHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_towerSlope_y2/tsc_cos_comb/AuAuOutput/ohcal_cdb_tsc_cos_calib.root");
     if (data == 0) calibOHCal->set_directURL_ZScrosscalib("/sphenix/user/egm2153/calib_study/detdeta/analysis/Run2024/HCALOUT_ZSCrossCalib_ana450_2024p009_54912.root");
     se->registerSubsystem(calibOHCal);
 
     std::cout << "Calibrating IHcal" << std::endl;
     CaloTowerCalib *calibIHCal = new CaloTowerCalib("HCALIN");
     calibIHCal->set_detector_type(CaloTowerDefs::HCALIN);
-    //calibIHCal->setFieldName("ihcal_cosmic_calibration"); 
+    calibIHCal->setFieldName("HCALIN_calib_ADC_to_ETower"); 
     //calibIHCal->set_directURL("/sphenix/user/hanpuj/HCalCosmics/offline/calibration_factor/ihcal_cosmic_calibration_4.root");
-    calibIHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_towerSlope_y2/tsc_cos_comb/AuAuOutput/ihcal_cdb_tsc_cos_calib.root");
+    calibIHCal->set_directURL("/sphenix/user/egm2153/calib_study/detdeta/runsimana0/calib_files/HCALIN_calib_ADC_to_ETower_old_mc_digi_scale_54912.root");
+    //calibIHCal->set_directURL("/sphenix/u/bseidlitz/work/macros/calibrations/calo/hcal_towerSlope_y2/tsc_cos_comb/AuAuOutput/ihcal_cdb_tsc_cos_calib.root");
     if (data == 0) calibIHCal->set_directURL_ZScrosscalib("/sphenix/user/egm2153/calib_study/detdeta/analysis/Run2024/HCALIN_ZSCrossCalib_ana450_2024p009_54912.root");
     se->registerSubsystem(calibIHCal);
   } else {
