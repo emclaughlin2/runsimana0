@@ -27,7 +27,7 @@
 #include "G4_CEmc_Spacal.C"
 #include "G4_HcalIn_ref.C"
 #include "G4_HcalOut_ref.C"
-//#include "Sys_Calo.C"
+#include "Sys_Calo_2024.C"
 #include "Calo_Fitting.C"
 #include "Calo_Calib.C"
 #include <globalvertex/GlobalVertexReco.h>
@@ -346,9 +346,49 @@ int run_dETdeta2024(int nproc = 0, string tag = "", int datormc = 0, int debug =
   se->registerSubsystem( cent ); 
   }
 
-  //if(!datormc) {
-  //  Register_Tower_sys();
-  //}
+  if (datormc > 0 && datormc < 4) {
+    MinimumBiasClassifier *mb = new MinimumBiasClassifier();
+    mb->Verbosity(2);
+    //mb->setIsSim(true);
+    if (datormc == 1) {
+      mb->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_hijing.root"); // will change run by run
+      mb->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_hijing.root"); // will change run by run
+    } else if (datormc == 2) {
+      mb->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_epos.root"); // will change run by run
+      mb->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_epos.root"); // will change run by run
+    } else if (datormc == 3) {
+      mb->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_ampt.root"); // will change run by run
+      mb->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_ampt.root"); // will change run by run
+    } else {
+      std::cout << "minbias classifer has wrong datormc value" << std::endl;
+      return 0;
+    }
+    se->registerSubsystem(mb);
+
+    CentralityReco* cent = new CentralityReco();
+    cent->Verbosity(2);
+    if (datormc == 1) {
+      cent->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_hijing.root"); 
+      cent->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_hijing.root"); 
+      cent->setOverwriteDivs("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/divs/cdb_centrality_hijing.root");
+    } else if (datormc == 2) {
+      cent->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_epos.root"); 
+      cent->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_epos.root"); 
+      cent->setOverwriteDivs("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/divs/cdb_centrality_epos.root");
+    } else if (datormc == 3) {
+      cent->setOverwriteScale("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/scales/cdb_centrality_scale_ampt.root"); 
+      cent->setOverwriteVtx("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/vertexscales/cdb_centrality_vertex_scale_ampt.root"); 
+      cent->setOverwriteDivs("/sphenix/user/dlis/Projects/centrality/cdb/calibrations/divs/cdb_centrality_ampt.root");
+      } else {
+      std::cout << "centrality reco has wrong datormc value" << std::endl;
+      return 0;
+    }
+    se->registerSubsystem( cent ); 
+  }
+
+  if(!datormc) {
+    Register_Tower_sys();
+  }
 
   // option for testing new emcal calibrations with direct URL instead of CDB
   int dataormc = datormc;
